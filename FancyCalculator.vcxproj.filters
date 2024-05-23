@@ -35,14 +35,24 @@
     <ClCompile Include="FancyCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ResourceCompile Include="$pro_name$.rc">
-    </ResourceCompile>
-    <None Include="$pro_name$.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="$pro_name$.def">
-      <Filter>Resource Files</Filter>
-    </None>
-
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Operation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HistoryFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Operation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HistoryFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

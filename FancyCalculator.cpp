@@ -1,6 +1,7 @@
-
+ï»¿
 #include "FancyCalculator.h"
 #include "ui_FancyCalculator.h"
+#include "Operation.h"
 
 FancyCalculator::FancyCalculator(QWidget* parent)
     : QMainWindow(parent)
@@ -16,18 +17,34 @@ FancyCalculator::FancyCalculator(QWidget* parent)
 FancyCalculator::~FancyCalculator()
 {
 }
+
 void FancyCalculator::showPage1()
 {
-    ui.stackedWidget->setCurrentIndex(0); // Prze³¹cz na stronê 1
+    ui.stackedWidget->setCurrentIndex(0); 
 }
 
 void FancyCalculator::showPage2()
 {
-    ui.stackedWidget->setCurrentIndex(1); // Prze³¹cz na stronê 2
+    ui.stackedWidget->setCurrentIndex(1); 
 }
 
 void FancyCalculator::showPage3()
 {
-    ui.stackedWidget->setCurrentIndex(2); // Prze³¹cz na stronê 3
+    ui.stackedWidget->setCurrentIndex(2);
 }
 
+void FancyCalculator::wykonajOperacje(const Operation& operacja, double a, double b)
+{
+    try
+    {
+        double wynik = operacja.wykonaj(a, b);
+        // TODO: print the result
+        //std::cout << "Wynik: " << wynik << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        // TODO: here we can use the QT message box 
+        // create class for handling any type of errors (instead of the std::cerr)
+        //std::cerr << "BÅ‚Ä…d: " << e.what() << std::endl;
+    }
+}
