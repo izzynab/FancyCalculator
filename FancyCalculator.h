@@ -23,7 +23,7 @@ stuff TODO
 - zapisywanie / odczytywanie historii do pliku
 - uzyc string / vector (STL; smart_pointers???) TODO: think on that 
 - throw_exception -> QT messhage box eror (dzielenie przez 0)
-- 
+- ogarnac jak uzywac polimorizmu i takich inncyh dla liczb etc...
 
 */
 
@@ -32,7 +32,7 @@ ideas:
 
 - zmiany kolorkow / zapisywanie ich 
 - dodanie nowych operacji (np. potegowanie)
-- dodanie nowych trybow (np. tryb naukowy)
+- dodanie nowych trybow (narazie jebac nie dodajemy za duzo myslenia)
 
 */
 

@@ -8,9 +8,12 @@ FancyCalculator::FancyCalculator(QWidget* parent)
 {
     ui.setupUi(this);
 
-    connect(ui.programmerModeButton, &QPushButton::clicked, this, &FancyCalculator::showPage1);
-    connect(ui.basicModeButton, &QPushButton::clicked, this, &FancyCalculator::showPage2);
-    connect(ui.pushButton_55, &QPushButton::clicked, this, &FancyCalculator::showPage3);
+    // Starting page (default calcualtor)
+    ui.stackedWidget->setCurrentIndex(0);
+
+    //connect(ui.programmerModeButton, &QPushButton::clicked, this, &FancyCalculator::showPage1);
+    //connect(ui.basicModeButton, &QPushButton::clicked, this, &FancyCalculator::showPage2);
+    //connect(ui.pushButton_55, &QPushButton::clicked, this, &FancyCalculator::showPage3);
 
 }
 
