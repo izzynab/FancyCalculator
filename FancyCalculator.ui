@@ -139,6 +139,9 @@ color:white;
          </item>
          <item>
           <widget class="QPushButton" name="basicModeButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -191,6 +194,9 @@ color:white;
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_55">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>

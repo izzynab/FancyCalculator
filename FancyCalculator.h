@@ -47,8 +47,6 @@ public:
 
 private slots:
     void showPage1();
-    void showPage2();
-    void showPage3();
 
 private:
     void wykonajOperacje(const Operation& operacja, double a, double b);
