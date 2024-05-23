@@ -1,4 +1,13 @@
 <RCC>
-    <qresource prefix="FancyCalculator">
-    </qresource>
+  <qresource prefix="FancyCalculator"/>
+  <qresource prefix="icon">
+    <file>icon/balance-sheet (1).png</file>
+    <file>icon/balance-sheet (2).png</file>
+    <file>icon/balance-sheet.png</file>
+    <file>icon/delete (1).png</file>
+    <file>icon/tube (1).png</file>
+    <file>icon/tube.png</file>
+    <file>icon/window (1).png</file>
+    <file>icon/window.png</file>
+  </qresource>
 </RCC>
