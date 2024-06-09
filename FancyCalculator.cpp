@@ -1,6 +1,6 @@
 ﻿#include "FancyCalculator.h"
 #include "ui_FancyCalculator.h"
-#include "Operation.h"
+#include "Operation.hpp"
 #include <QApplication>
 #include <QCheckBox>
 #include <QWidget>

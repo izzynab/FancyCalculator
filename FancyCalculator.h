@@ -4,7 +4,7 @@
 #include <vector>
 #include <QMessageBox>
 #include "ui_FancyCalculator.h"
-#include "Operation.h"
+#include "Operation.hpp"
 
 class FancyCalculator : public QMainWindow {
     Q_OBJECT
