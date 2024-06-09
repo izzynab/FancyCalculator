@@ -12,7 +12,7 @@ FancyCalculator::FancyCalculator(QWidget* parent)
 {
     ui.setupUi(this);
 
-    // Starting page (default calcualtor)
+    // Starting page (default calculator)
     ui.stackedWidget->setCurrentIndex(0);
 
     connect(ui.Btn_equal, &QPushButton::clicked, this, &FancyCalculator::equal_operation);
@@ -44,19 +44,41 @@ FancyCalculator::~FancyCalculator() {
 
 void FancyCalculator::loadNumberPart(const QString& part) {
     currentNumber += part;
-    currentText = currentNumber;
+    currentText = firstNumber;
+    if (currentOperation) {
+		currentText += currentOperation->getOperator();
+	}
+    currentText += currentNumber;
+
     showCurrentText();
 }
 
-void FancyCalculator::delet_operation() {
-    if (operationLoaded) {
+void FancyCalculator::delet_operation() 
+{
+    if (currentNumber.isEmpty() && operationLoaded) 
+    {
         currentOperation = nullptr;
         operationLoaded = false;
     }
-    else {
-        currentNumber.chop(1);
+    else 
+    {
+        if (currentNumber.size() > 1)
+        {
+            currentNumber.chop(1);
+        }
+        else
+        {
+            currentNumber.clear();
+        }
     }
-    currentText.chop(1);
+
+    currentText = firstNumber;
+    if (currentOperation) 
+    {
+        currentText += currentOperation->getOperator();
+    }
+    currentText += currentNumber;
+
     showCurrentText();
 }
 
@@ -97,6 +119,7 @@ void FancyCalculator::operation() {
     operationLoaded = true;
     firstNumberLoaded = true;
     addOperatorToText();
+    currentText = firstNumber + currentOperation->getOperator();
     showCurrentText();
 }
 
@@ -110,6 +133,13 @@ void FancyCalculator::equal_operation() {
     double firstNumberVal = firstNumber.toDouble(&ok1);
     double secondNumberVal = currentNumber.toDouble(&ok2);
 
+    currentText.clear();
+    currentNumber.clear();
+    firstNumber.clear();
+
+    operationLoaded = false;
+    firstNumberLoaded = false;
+
     if (!ok1 || !ok2) {
         QMessageBox::warning(this, "Błąd", "Niepoprawna liczba.");
         return;
@@ -117,18 +147,25 @@ void FancyCalculator::equal_operation() {
 
     try {
         double result = currentOperation->execute(firstNumberVal, secondNumberVal);
-        showNumber(QString::number(result));
+        currentNumber = QString::number(result);
+        currentText = currentNumber;
+        showCurrentText();
     }
     catch (const std::exception& e) {
         QMessageBox::warning(this, "Błąd", e.what());
     }
 
+    resultsHistory.push(currentNumber.toStdString());
+
+
+
+    QString history = resultsHistory.top().c_str();
+    ui.textHistory->setPlainText(history);
+    ui.textHistory->setTextColor(Qt::gray);
+
     delete currentOperation;
     currentOperation = nullptr;
-    operationLoaded = false;
-    firstNumberLoaded = false;
-    currentNumber.clear();
-    firstNumber.clear();
+
 }
 
 void FancyCalculator::onBtnToggled() {

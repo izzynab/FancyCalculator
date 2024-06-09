@@ -51,7 +51,7 @@ public:
     {
         if (b == 0) 
         {
-            throw std::runtime_error("Division by zero");
+            throw std::runtime_error("Nie dzielimy przez 0.");
         }
         return a / b;
     }
