@@ -37,9 +37,6 @@ private:
     template<typename T>
     void operation();
 
-    void onBtnToggled();
-    void showNumber(const QString& number);
-
 private:
     Ui::FancyCalculatorClass ui;
 };

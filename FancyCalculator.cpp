@@ -34,8 +34,6 @@ FancyCalculator::FancyCalculator(QWidget* parent)
     connect(ui.Btn7, &QPushButton::clicked, [=]() { loadNumberPart("7"); });
     connect(ui.Btn8, &QPushButton::clicked, [=]() { loadNumberPart("8"); });
     connect(ui.Btn9, &QPushButton::clicked, [=]() { loadNumberPart("9"); });
-
-    connect(ui.Btn_mode, &QPushButton::clicked, this, &FancyCalculator::onBtnToggled);
 }
 
 FancyCalculator::~FancyCalculator() {
@@ -43,11 +41,17 @@ FancyCalculator::~FancyCalculator() {
 }
 
 void FancyCalculator::loadNumberPart(const QString& part) {
-    currentNumber += part;
+    if (operationLoaded) {
+        currentNumber += part;
+    }
+    else {
+        firstNumber += part;
+    }
+
     currentText = firstNumber;
     if (currentOperation) {
-		currentText += currentOperation->getOperator();
-	}
+        currentText += currentOperation->getOperator();
+    }
     currentText += currentNumber;
 
     showCurrentText();
@@ -62,13 +66,21 @@ void FancyCalculator::delet_operation()
     }
     else 
     {
-        if (currentNumber.size() > 1)
-        {
-            currentNumber.chop(1);
+        if (operationLoaded) {
+            if (currentNumber.size() > 1) {
+                currentNumber.chop(1);
+            }
+            else {
+                currentNumber.clear();
+            }
         }
-        else
-        {
-            currentNumber.clear();
+        else {
+            if (firstNumber.size() > 1) {
+                firstNumber.chop(1);
+            }
+            else {
+                firstNumber.clear();
+            }
         }
     }
 
@@ -109,11 +121,10 @@ void FancyCalculator::operation() {
         QMessageBox::warning(this, "Błąd", "Operacja już została wybrana.");
         return;
     }
-    if (currentNumber.isEmpty()) {
+    if (firstNumber.isEmpty()) {
         QMessageBox::warning(this, "Błąd", "Proszę wprowadzić liczbę przed operacją.");
         return;
     }
-    firstNumber = currentNumber;
     currentNumber.clear();
     currentOperation = new T();
     operationLoaded = true;
@@ -133,6 +144,11 @@ void FancyCalculator::equal_operation() {
     double firstNumberVal = firstNumber.toDouble(&ok1);
     double secondNumberVal = currentNumber.toDouble(&ok2);
 
+    if (!ok1 || !ok2) {
+        QMessageBox::warning(this, "Błąd", "Niepoprawna liczba.");
+        return;
+    }
+
     currentText.clear();
     currentNumber.clear();
     firstNumber.clear();
@@ -140,15 +156,11 @@ void FancyCalculator::equal_operation() {
     operationLoaded = false;
     firstNumberLoaded = false;
 
-    if (!ok1 || !ok2) {
-        QMessageBox::warning(this, "Błąd", "Niepoprawna liczba.");
-        return;
-    }
 
     try {
         double result = currentOperation->execute(firstNumberVal, secondNumberVal);
-        currentNumber = QString::number(result);
-        currentText = currentNumber;
+        firstNumber = QString::number(result);
+        currentText = firstNumber;
         showCurrentText();
     }
     catch (const std::exception& e) {
@@ -161,27 +173,9 @@ void FancyCalculator::equal_operation() {
 
     QString history = resultsHistory.top().c_str();
     ui.textHistory->setPlainText(history);
-    ui.textHistory->setTextColor(Qt::gray);
 
     delete currentOperation;
     currentOperation = nullptr;
 
 }
 
-void FancyCalculator::onBtnToggled() {
-    isChecked = !isChecked;
-    if (isChecked) {
-        ui.widget->setStyleSheet("QWidget { background-color:white; color:black }");
-        ui.textEdit->setStyleSheet("QTextEdit {color: black;font-size: 32px;}");
-        ui.centralWidget->setStyleSheet("QWidget { background-color:white; }");
-    }
-    else {
-        ui.centralWidget->setStyleSheet("QWidget { background-color: rgb(24, 24, 24) }");
-        ui.textEdit->setStyleSheet("QTextEdit {background-color: rgb(24, 24, 24);color: white;font-size:32px;}");
-    }
-}
-
-void FancyCalculator::showNumber(const QString& number) {
-    currentText = number;
-    showCurrentText();
-}
