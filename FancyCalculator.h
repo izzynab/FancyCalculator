@@ -1,7 +1,7 @@
 ﻿#include <QtWidgets/QMainWindow>
 #include <QString>
 #include <string.h>
-#include <stack>
+#include <vector>
 #include <QMessageBox>
 #include "ui_FancyCalculator.h"
 #include "Operation.h"
@@ -24,7 +24,8 @@ private:
     Operation* currentOperation;
     bool isChecked;
 
-    std::stack<std::string> resultsHistory;
+    std::vector<double> resultsHistory;
+    std::vector<QTextEdit*> historyTexts;
 
 private:
     void loadNumberPart(const QString& part);

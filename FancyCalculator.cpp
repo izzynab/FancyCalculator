@@ -6,6 +6,8 @@
 #include <QWidget>
 #include <QMessageBox>
 #include <stack>
+#include <vector>
+
 
 FancyCalculator::FancyCalculator(QWidget* parent)
     : QMainWindow(parent), currentOperation(nullptr), operationLoaded(false), firstNumberLoaded(false), isChecked(false)
@@ -34,6 +36,11 @@ FancyCalculator::FancyCalculator(QWidget* parent)
     connect(ui.Btn7, &QPushButton::clicked, [=]() { loadNumberPart("7"); });
     connect(ui.Btn8, &QPushButton::clicked, [=]() { loadNumberPart("8"); });
     connect(ui.Btn9, &QPushButton::clicked, [=]() { loadNumberPart("9"); });
+
+    historyTexts.push_back(ui.textHistory);
+    historyTexts.push_back(ui.textHistory_2);
+    historyTexts.push_back(ui.textHistory_3);
+
 }
 
 FancyCalculator::~FancyCalculator() {
@@ -161,18 +168,26 @@ void FancyCalculator::equal_operation() {
         double result = currentOperation->execute(firstNumberVal, secondNumberVal);
         firstNumber = QString::number(result);
         currentText = firstNumber;
+
+        resultsHistory.push_back(result);
+
         showCurrentText();
     }
     catch (const std::exception& e) {
         QMessageBox::warning(this, "Błąd", e.what());
     }
 
-    resultsHistory.push(currentNumber.toStdString());
 
+    if (resultsHistory.size() > historyTexts.size())
+    {
+        resultsHistory.erase(resultsHistory.begin());
+    }
 
-
-    QString history = resultsHistory.top().c_str();
-    ui.textHistory->setPlainText(history);
+    for (int i = 0; i < resultsHistory.size(); ++i)
+    {
+        QString history = QString::number(resultsHistory[i]);
+        historyTexts[i]->setPlainText(history);
+    }
 
     delete currentOperation;
     currentOperation = nullptr;
