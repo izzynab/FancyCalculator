@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include "ui_FancyCalculator.h"
 #include "Operation.hpp"
+#include "HistoryFile.h"
 
 class FancyCalculator : public QMainWindow {
     Q_OBJECT
@@ -26,6 +27,8 @@ private:
 
     std::vector<double> resultsHistory;
     std::vector<QTextEdit*> historyTexts;
+
+    HistoryFile* history;
 
 private:
     void loadNumberPart(const QString& part);

@@ -97,10 +97,11 @@
     <QtUic Include="FancyCalculator.ui" />
     <QtMoc Include="FancyCalculator.h" />
     <ClCompile Include="FancyCalculator.cpp" />
+    <ClCompile Include="HistoryFile.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HistoryFile.hpp" />
+    <ClInclude Include="HistoryFile.h" />
     <ClInclude Include="Operation.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,8 +5,8 @@
 #include <QCheckBox>
 #include <QWidget>
 #include <QMessageBox>
-#include <stack>
 #include <vector>
+#include "HistoryFile.h"
 
 
 FancyCalculator::FancyCalculator(QWidget* parent)
@@ -41,10 +41,13 @@ FancyCalculator::FancyCalculator(QWidget* parent)
     historyTexts.push_back(ui.textHistory_2);
     historyTexts.push_back(ui.textHistory_3);
 
+    history = new HistoryFile("history.txt");
+
 }
 
 FancyCalculator::~FancyCalculator() {
     delete currentOperation;
+    delete history;
 }
 
 void FancyCalculator::loadNumberPart(const QString& part) {
@@ -170,6 +173,9 @@ void FancyCalculator::equal_operation() {
         currentText = firstNumber;
 
         resultsHistory.push_back(result);
+
+        QString equation = QString::number(firstNumberVal )+ " " + currentOperation->getOperator() + " " + QString::number(secondNumberVal) + " = " + QString::number(result);
+        history->addEntry(equation);
 
         showCurrentText();
     }
